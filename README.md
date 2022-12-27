@@ -6,14 +6,14 @@
 git clone 
 ```
 ```
-cd api
+cd api_final_yatube
 ```
 Установить виртуальное окружение, затем активировать его:
 ```
 python -m venv venv
 ```
 ```
-source venv/bin/activate
+source venv/scripts/activate
 ```
 Установить зависимости из файла requirements.txt:
 ```
@@ -24,9 +24,9 @@ pip install -r requirements.txt
 ```
 Выполнить миграции:
 ```
-python3 manage.py migrate
+python manage.py migrate
 ```
 Запустить проект:
 ```
-python3 manage.py runserver
+python manage.py runserver
 =======
