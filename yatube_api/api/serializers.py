@@ -4,42 +4,29 @@ from rest_framework.validators import UniqueTogetherValidator
 from posts.models import Comment, Follow, Group, Post, User
 
 
-class GroupSerializer(serializers.ModelSerializer):
-
-    class Meta:
-        fields = ('title', 'description', 'id', 'slug')
-        model = Group
-
-
 class CommentSerializer(serializers.ModelSerializer):
-    author = serializers.SlugRelatedField(
-        read_only=True, slug_field='username'
-    )
+    author = serializers.SlugRelatedField(read_only=True,
+                                          slug_field='username')
 
     class Meta:
-        fields = ('id', 'author', 'post', 'text', 'created')
         model = Comment
+        fields = '__all__'
         read_only_fields = ('post', )
 
 
-class PostSerializer(serializers.ModelSerializer):
-    comment = CommentSerializer(many=True, required=False)
-    author = SlugRelatedField(slug_field='username', read_only=True)
-    publication_date = serializers.DateTimeField(
-        source='pub_date', read_only=True
-    )
+class GroupSerializer(serializers.ModelSerializer):
 
     class Meta:
-        fields = (
-            'text', 'pub_date', 'author', 'group',
-            'comment', 'publication_date', 'id'
-        )
-        model = Post
+        fields = '__all__'
+        model = Group
 
-    def create(self, validated_data):
-        if 'group' or 'comment' not in self.initial_data:
-            return Post.objects.create(**validated_data)
-        return Post.objects.create(**validated_data)
+
+class PostSerializer(serializers.ModelSerializer):
+    author = SlugRelatedField(slug_field='username', read_only=True)
+
+    class Meta:
+        fields = '__all__'
+        model = Post
 
 
 class FollowSerializer(serializers.ModelSerializer):
@@ -51,7 +38,7 @@ class FollowSerializer(serializers.ModelSerializer):
         queryset=User.objects.all(), slug_field='username')
 
     class Meta:
-        fields = ('user', 'following')
+        fields = '__all__'
         model = Follow
         validators = [
             UniqueTogetherValidator(
