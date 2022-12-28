@@ -7,7 +7,7 @@ from .mixins import CreateListViewSet
 from .permissions import IsAuthorOrReadOnly
 from .serializers import (
     CommentSerializer, PostSerializer, GroupSerializer, FollowSerializer)
-from posts.models import User, Post, Group, Follow
+from posts.models import Post, Group
 
 
 class GroupViewSet(viewsets.ReadOnlyModelViewSet):
